@@ -1,11 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Registration", () => {
-  const randomInt = Math.floor(Math.random() * 1000);
-  const userName = `Oleg_${randomInt}`;
-  const userEmail = `olegivaniuk${randomInt}@gmail.com`;
-
   test("has title", async ({ page }) => {
+    const randomInt = Math.floor(Math.random() * 1000);
+    const userName = `Oleg_${randomInt}`;
+    const userEmail = `olegivaniuk${randomInt}@gmail.com`;
     const inputName = page.locator('input[data-qa="name"]');
     const inputEmail = page.locator('input[data-qa="email"]');
 
@@ -15,15 +13,11 @@ test.describe("Registration", () => {
     await expect(page).toHaveTitle(/Automation Exercise/);
     await expect(page).toHaveURL("https://automationexercise.com/");
     await page.locator(".fa-lock").click();
-    await expect(
-      page.getByRole("heading", { name: "User Signup!" })
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "User Signup!" })).toBeVisible();
     await page.locator('input[data-qa="signup-name"]').fill(userName);
     await page.locator('input[data-qa="signup-email"]').fill(userEmail);
     await page.locator('[data-qa="signup-button"]').click();
-    await expect(
-      page.getByRole("textbox", { name: "Name *", exact: true })
-    ).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Name *", exact: true })).toBeVisible();
 
     //Verify that 'ENTER ACCOUNT INFORMATION' is visible
     await expect(inputName).toBeVisible();
@@ -37,14 +31,8 @@ test.describe("Registration", () => {
     await page.locator('select[data-qa="days"]').selectOption("10");
     await page.locator('select[data-qa="months"]').selectOption("June");
     await page.locator('select[data-qa="years"]').selectOption("2020");
-    await page
-      .getByRole("checkbox", { name: "Sign up for our newsletter!" })
-      .check();
-    await page
-      .getByRole("checkbox", {
-        name: "Receive special offers from our partners!",
-      })
-      .check();
+    await page.getByRole("checkbox", { name: "Sign up for our newsletter!" }).check();
+    await page.getByRole("checkbox", { name: "Receive special offers from our partners!", }).check();
     await page.locator('input[data-qa="first_name"]').fill("Oleg");
     await page.locator('input[data-qa="last_name"]').fill("Ivaniuk");
     await page.locator('input[data-qa="company"]').fill("TestCompany");
@@ -66,9 +54,6 @@ test.describe("Registration", () => {
 
     //Delete Account
     await page.locator('a[href="/delete_account"]').click();
-    await expect(
-      page.getByRole("heading", { name: "Account Deleted!" })
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Account Deleted!" })).toBeVisible();
     await page.locator('a[data-qa="continue-button"]').click();
   });
-});
