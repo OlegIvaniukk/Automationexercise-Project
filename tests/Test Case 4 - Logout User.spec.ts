@@ -1,22 +1,18 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from './fixtures/baseFixtures';
 
-test("Logout action", async ({ page }) => {
+test('Logout action', async ({ validatedPage }) => {
+  const userEmail = 'olegivaniuk123@gmail.com'; // Replace with a valid registered email
+  const userPassword = '123'; // Replace with a valid registered password
+  const userName = 'Oleg'; // Replace with a valid registered username
 
-    const userEmail = 'olegivaniuk123@gmail.com'; // Replace with a valid registered email
-    const userPassword = '123'; // Replace with a valid registered password
-    const userName = "Oleg"; // Replace with a valid registered username
-
-
-  await page.goto("http://automationexercise.com");
-  await expect(page).toHaveTitle(/Automation Exercise/);
-  await page.locator('a[href="/login"]').click();
-  await expect(page.locator('h2:has-text("Login to your account")')).toBeVisible();
-  await page.locator('[data-qa="login-email"]').fill(userEmail);
-  await page.locator('[data-qa="login-password"]').fill(userPassword);
-  await page.locator('[data-qa="login-button"]').click();
-  await expect(page.getByText(`Logged in as ${userName}`)).toBeVisible();
-  await page.locator('a[href="/logout"]').click();
-  await expect(page.locator('h2:has-text("Login to your account")')).toBeVisible();
-
-
+  await validatedPage.goto('http://automationexercise.com');
+  await expect(validatedPage).toHaveTitle(/Automation Exercise/);
+  await validatedPage.locator('a[href="/login"]').click();
+  await expect(validatedPage.locator('h2:has-text("Login to your account")')).toBeVisible();
+  await validatedPage.locator('[data-qa="login-email"]').fill(userEmail);
+  await validatedPage.locator('[data-qa="login-password"]').fill(userPassword);
+  await validatedPage.locator('[data-qa="login-button"]').click();
+  await expect(validatedPage.getByText(`Logged in as ${userName}`)).toBeVisible();
+  await validatedPage.locator('a[href="/logout"]').click();
+  await expect(validatedPage.locator('h2:has-text("Login to your account")')).toBeVisible();
 });

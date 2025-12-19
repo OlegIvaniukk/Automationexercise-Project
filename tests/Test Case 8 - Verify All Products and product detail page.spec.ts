@@ -1,17 +1,25 @@
-import {test, expect} from '@playwright/test';
+import { test, expect } from './fixtures/baseFixtures';
 
-test('Product details', async ({page}) => {
-    await page.goto('http://automationexercise.com');
-    await expect(page).toHaveTitle(/Automation Exercise/);
-    await page.locator('a[href="/products"]').click();
-    await expect(page).toHaveURL('https://automationexercise.com/products');
-    await expect(page.getByRole('heading', {name: "All Products"})).toBeVisible();
-    await page.locator('a[href="/product_details/1"]').first().click();
-    await expect(page).toHaveURL('https://automationexercise.com/product_details/1');
-    await expect(page.locator('.product-information h2')).toBeVisible();
-    await expect(page.locator('.product-information p').filter({hasText:"Category"})).toBeVisible();
-    await expect(page.locator('.product-information span span')).toBeVisible();
-    await expect(page.locator('.product-information p').filter({ hasText:"Availability:"})).toBeVisible();
-    await expect(page.locator('.product-information p').filter({ hasText:"Condition:"})).toBeVisible();
-    await expect(page.locator('.product-information p').filter({ hasText:"Brand:"})).toBeVisible();
-})
+test('Product details', async ({ validatedPage }) => {
+  await validatedPage.goto('http://automationexercise.com');
+  await expect(validatedPage).toHaveTitle(/Automation Exercise/);
+  await validatedPage.locator('a[href="/products"]').click();
+  await expect(validatedPage).toHaveURL('https://automationexercise.com/products');
+  await expect(validatedPage.getByRole('heading', { name: 'All Products' })).toBeVisible();
+  await validatedPage.locator('a[href="/product_details/1"]').first().click();
+  await expect(validatedPage).toHaveURL('https://automationexercise.com/product_details/1');
+  await expect(validatedPage.locator('.product-information h2')).toBeVisible();
+  await expect(
+    validatedPage.locator('.product-information p').filter({ hasText: 'Category' }),
+  ).toBeVisible();
+  await expect(validatedPage.locator('.product-information span span')).toBeVisible();
+  await expect(
+    validatedPage.locator('.product-information p').filter({ hasText: 'Availability:' }),
+  ).toBeVisible();
+  await expect(
+    validatedPage.locator('.product-information p').filter({ hasText: 'Condition:' }),
+  ).toBeVisible();
+  await expect(
+    validatedPage.locator('.product-information p').filter({ hasText: 'Brand:' }),
+  ).toBeVisible();
+});

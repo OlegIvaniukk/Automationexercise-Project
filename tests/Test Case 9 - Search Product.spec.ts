@@ -1,26 +1,21 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from './fixtures/baseFixtures';
 
-test("Prod search", async ({ page }) => {
-  await page.goto("http://automationexercise.com");
-  await expect(page).toHaveTitle(/Automation Exercise/);
-  await page.locator('a[href="/products"]').click();
-  await expect(
-    page.getByRole("heading", { name: "All Products" })
-  ).toBeVisible();
-  const keyword = "Top";
-  await page.locator(".input-lg").fill(keyword);
-  await page.locator('#submit_search').waitFor({ state: 'visible', timeout: 5000 });
-  await page.locator('#submit_search').click();
-  await expect(
-    page.getByRole("heading", { name: "Searched Products" })
-  ).toBeVisible();
+test('Prod search', async ({ validatedPage }) => {
+  await validatedPage.goto('http://automationexercise.com');
+  await expect(validatedPage).toHaveTitle(/Automation Exercise/);
+  await validatedPage.locator('a[href="/products"]').click();
+  await expect(validatedPage.getByRole('heading', { name: 'All Products' })).toBeVisible();
+  const keyword = 'Top';
+  await validatedPage.locator('.input-lg').fill(keyword);
+  await validatedPage.locator('#submit_search').waitFor({ state: 'visible', timeout: 5000 });
+  await validatedPage.locator('#submit_search').click();
+  await expect(validatedPage.getByRole('heading', { name: 'Searched Products' })).toBeVisible();
 
-  const searchResults = page
-    .locator(".features_items")
-    .locator(".single-products");
+  const searchResults = validatedPage.locator('.features_items').locator('.single-products');
   const count = await searchResults.count();
 
   expect(count).toBeGreaterThan(0);
   for (let i = 0; i < count; i++) {
-    await expect(searchResults.nth(i)).toBeVisible();  }
+    await expect(searchResults.nth(i)).toBeVisible();
+  }
 });

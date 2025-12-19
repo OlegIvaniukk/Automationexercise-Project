@@ -1,10 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from './fixtures/baseFixtures';
 
-test("TC page verification", async ({ page }) => {
-    await page.goto("http://automationexercise.com");
-    await expect(page).toHaveTitle(/Automation Exercise/);
-    await page.getByRole('button', { name: 'Test Cases' }).click();
-    await expect(page).toHaveURL('https://automationexercise.com/test_cases');
-    await expect(page.getByText('Below is the list of test')).toBeVisible();
-
+test('TC page verification', async ({ validatedPage }) => {
+  await validatedPage.goto('http://automationexercise.com');
+  await expect(validatedPage).toHaveTitle(/Automation Exercise/);
+  await validatedPage.getByRole('button', { name: 'Test Cases' }).click();
+  await expect(validatedPage).toHaveURL('https://automationexercise.com/test_cases');
+  await expect(validatedPage.getByText('Below is the list of test')).toBeVisible();
 });
